@@ -23,10 +23,14 @@ class DatabaseController {
 
     async connectDatabase(req, res, next) {
         let databaseService = sessionService.get(req.sessionID);
+        console.log(databaseService, '+++++++++++++DATABASE SERVICE');
         if (!databaseService.isConnected()) {
+            console.log('DATABASE IS NOT CONNECTED ++++++++++++++++++++++++')
+            console.log(req.body, 'REQ BODY +++++++++++++++++++++++++++++++');
             await databaseService.connectDatabase(req.body);
         }
         const connectionInfo = databaseService.getConnectionInfo();
+        console.log('CONNECTION INFO ++++++++++++', connectionInfo);
         res.status(200).json(connectionInfo).end();
     }
 
@@ -64,7 +68,6 @@ class DatabaseController {
             throw new Error('Not connected');
         }
     }
-    /*
     async getMetaChart(req, res, next) {
         let databaseService = sessionService.get(req.sessionID);
         if (databaseService.isConnected()) {
@@ -88,7 +91,7 @@ class DatabaseController {
         } else {
             throw new Error('Not connected');
         }
-    }*/
+    }
 }
 
 module.exports = DatabaseController;

@@ -29,7 +29,7 @@ import styles from './ServerConnectFrame.module.scss';
 import { connectToDatabase as connectToDatabaseApi, changeGraph } from '../../../features/database/DatabaseSlice';
 import { addAlert } from '../../../features/alert/AlertSlice';
 import { addFrame, trimFrame } from '../../../features/frame/FrameSlice';
-import { /* getMetaChartData, */ getMetaData } from '../../../features/database/MetadataSlice';
+import { getMetaChartData, getMetaData } from '../../../features/database/MetadataSlice';
 
 const FormInitialValue = {
   database: '',
@@ -55,7 +55,7 @@ const ServerConnectFrame = ({
       dispatch(getMetaData({ currentGraph })).then((metadataResponse) => {
         if (metadataResponse.type === 'database/getMetaData/fulfilled') {
           const graphName = Object.keys(metadataResponse.payload)[0];
-          /* dispatch(getMetaChartData()); */
+          dispatch(getMetaChartData());
           dispatch(changeGraph({ graphName }));
         }
         if (metadataResponse.type === 'database/getMetaData/rejected') {

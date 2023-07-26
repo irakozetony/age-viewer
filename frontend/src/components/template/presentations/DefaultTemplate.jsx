@@ -63,7 +63,7 @@ const DefaultTemplate = ({
   }, []);
 
   useEffect(() => {
-    let isChanged = false;
+    let isChanged = true;
     const cookieState = {
       theme,
       maxNumOfFrames,

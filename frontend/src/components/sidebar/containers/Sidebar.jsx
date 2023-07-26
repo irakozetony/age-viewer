@@ -16,9 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Sidebar from '../presentations/Sidebar';
+import store from '../../../app/store';
 
 const mapStateToProps = (state) => ({
   activeMenuName: state.navigator.activeMenu,
@@ -27,37 +28,30 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
-
-/*
-import React, {Component} from 'react'
-import store from '../../../app/store'
 class SidebarContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {navigator : store.getState().navigator}
-    }
+  constructor(props) {
+    super(props);
+    this.state = { navigator: store.getState().navigator };
+  }
 
-    componentDidMount() {
-        store.subscribe(function() {
-            this.setState({navigator : store.getState().navigator});
-        }.bind(this));
-    }
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({ navigator: store.getState().navigator });
+    });
+  }
 
-    changeTheme = (e) => {
-        console.log(e);
-        const selectedTheme = e.target.value
-        store.dispatch({type: 'CHANGE_THEME', theme : selectedTheme})
-    }
+  changeTheme(e) {
+    const selectedTheme = e.target.value;
+    this.store.dispatch({ type: 'CHANGE_THEME', theme: selectedTheme });
+  }
 
-    render() {
-        const activeMenu  = this.state.navigator.activeMenu
-        return (
-            <Sidebar activeMenuName={activeMenu} onThemeChange={this.changeTheme} />
-        );
-    }
-
+  render() {
+    const { navigator: { activeMenu } } = this.state;
+    return (
+      <Sidebar activeMenuName={activeMenu} onThemeChange={this.changeTheme} />
+    );
+  }
 }
 
-export default SidebarContainer
-*/
+export { SidebarContainer };
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

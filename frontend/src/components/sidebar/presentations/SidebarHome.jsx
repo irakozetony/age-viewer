@@ -28,6 +28,7 @@ import { faRedo, faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   VerticalLine, HorizontalLine, SubLabelLeft, SubLabelRight, GraphSelectDropdown,
 } from './SidebarComponents';
+import { disconnectToDatabase } from '../../../features/database/DatabaseSlice';
 
 const genLabelQuery = (eleType, labelName, database) => {
   if (eleType === 'node') {
@@ -290,7 +291,7 @@ const GraphItems = ({
 }) => (
   <button
     type="button"
-    className={`${graph === currentGraph ? 'graph-item-clicked' : 'graph-item'}`}
+    className={graph === currentGraph ? 'graph-item-clicked' : 'graph-item'}
     onClick={() => { changeCurrentGraph({ id: gid }); changeGraph({ graphName: graph }); }}
   >
     {graph}
@@ -374,6 +375,7 @@ const SidebarHome = ({
 
   const requestDisconnect = () => {
     const refKey = uuid();
+    dispatch(disconnectToDatabase());
     dispatch(() => trimFrame('ServerDisconnect'));
     dispatch(() => addFrame(command, 'ServerDisconnect', refKey));
   };
